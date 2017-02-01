@@ -1,0 +1,84 @@
+.darkBody {
+  background-color: #141414;
+  color: white;
+  padding: 0px;
+  margin: 0px;
+}
+.lists {
+  height: 40px;
+  font-size: 20px;
+  font-family: garamond;
+  padding: 3px;
+  border-bottom: 1.25px solid grey;
+}
+ul {
+  list-style: none;
+}
+
+.oneHeader {
+  padding-left: 15px;
+}
+
+i {
+  height: 50px;
+}
+.wagHeader {
+  padding: 0px;
+  background-color: #CC0000;
+  height: 60px;
+  width: 105%;
+  display: inline-block;
+}
+
+.wagList > li {
+  list-style: none;
+  display: inline-block;
+  align-items: center;
+  padding: 5px 16px;
+  border: .5px solid silver;
+  margin: 0px 10px;
+  border-radius: 8px;
+}
+.wagList > li:hover {
+	background-color: #FFC0CB;
+}
+
+.wagIcons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+}
+.flexyDiv {
+  padding: 25px 5px 10px 5px;
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+  justify-content: center;
+  height: 90px;
+  width: 140px;
+  border-radius: 20px;
+}
+
+.flexyDiv:hover {
+  background-color: #A80000;
+}
+button:hover {
+  background-color: #FFC0CB;
+}
+button {
+  border-radius: 8px;
+  height: 30px;
+  color: white;
+  font-size: 14px;
+}
+
+.doButton {
+  background-color: #004225;
+}
+button:active {
+	background-color: #686868;
+}
+
+.flexyDiv:active {
+	background-color: #686868;
+}
