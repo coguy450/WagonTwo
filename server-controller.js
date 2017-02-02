@@ -78,7 +78,6 @@ exports.goodActivities = (req, res) => {
   })
 }
 
-
 exports.actionsDone = (req, res) => {
   const uEmail = eatCookie(req);
   conMongo((db) => {
@@ -86,6 +85,16 @@ exports.actionsDone = (req, res) => {
     actions.find({email: uEmail}).toArray((err, results) => {
       if (err) console.error(err);
       res.status(200).send(results);
+    })
+  })
+}
+
+exports.updateActions = (req, res) => {
+  const uEmail = eatCookie(req);
+  conMongo((db) => {
+    var actions = db.collection('actions');
+    actions.updateOne({_id: req.body._id}, req.body, (uErr, uRes) => {
+      console.log();
     })
   })
 }

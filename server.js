@@ -3,7 +3,7 @@ var app = express();
 var MongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
 var fs = require('fs');
-cookieParser = require('cookie-parser');
+var cookieParser = require('cookie-parser');
 var connectionString = 'mongodb://localhost/wagon2';
 var actions = require('./server-controller');
 
@@ -19,10 +19,11 @@ app.get('/badActivities', actions.badActivities);
 app.get('/goodActivities', actions.goodActivities);
 app.get('/actions', actions.actionsDone);
 app.get('/login', actions.login);
+app.post('/actions', actions.updateActions);
 
 process.on('uncaughtException', function (err) {
-    console.log(err);
-}); 
+    console.error(err);
+});
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
