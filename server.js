@@ -17,7 +17,7 @@ app.get('/activities', actions.activities);
 app.get('/badActivities', actions.badActivities);
 app.get('/goodActivities', actions.goodActivities);
 app.get('/actionsDone', actions.actionsDone);
-
+app.get('/login', action.login);
 
 
 app.listen(app.get('port'), function() {

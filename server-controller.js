@@ -29,7 +29,6 @@ exports.addActivity = (req, res) => {
       });
   });
 };
-
 exports.doActivity = (req, res) => {
   console.log(req.body);
   conMongo((db) => {
@@ -44,7 +43,6 @@ exports.doActivity = (req, res) => {
       });
   });
 }
-
 exports.activities = (req, res) => {
   conMongo((db) => {
     var activity = db.collection('activities');
@@ -80,4 +78,8 @@ exports.actionsDone = (req, res) => {
       res.status(200).send(results);
     })
   })
+}
+
+exports.login = (req, res) => {
+  res.cookie('wagon',{email: 'coguy450@gmail.com'}, {maxAge: 604800000, httpOnly: true, path: '/'}).status(200).send('You are logged in dude');
 }

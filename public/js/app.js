@@ -1,4 +1,8 @@
-
+this.$http.get('/login').then(response => {
+  console.log(response.data);
+}, (err) => {
+  console.log(err);
+})
 
 var badDiv = new Vue({
   el: '#bad',
