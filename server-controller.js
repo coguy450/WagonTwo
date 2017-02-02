@@ -1,6 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
 var connectionString = 'mongodb://localhost/wagon2';
+var cookie = require('cookie');
 
 var thisDB;
 var conMongo = ((callback) => {
@@ -69,11 +70,19 @@ exports.goodActivities = (req, res) => {
   })
 }
 
+function eatCookie(reqIn) {
+  const cookieIn = req.headers.cookie;
+  let thisCookie = cookie.parse(cookieIn);
+  thisCookie = thisCookie['wagon'];
+  console.log(thisCookie);
+  return thisCookie;
+}
 exports.actionsDone = (req, res) => {
-  const uEmail = req.body.email;
+  const uEmail = eatCookie(req);
+  console.log(uEmail);
   conMongo((db) => {
     var actions = db.collection('actions');
-    actions.find({}).toArray((err, results) => {
+    actions.find({email: uEmail}).toArray((err, results) => {
       if (err) console.error(err);
       res.status(200).send(results);
     })
