@@ -30,6 +30,7 @@ var curAct = new Vue({
       activity.email = myEmail;
       console.log(activity);
       this.$http.post('/doActivity', activity).then(response => {
+
       });
     }
   }

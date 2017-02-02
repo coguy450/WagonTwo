@@ -14,7 +14,10 @@
 ul {
   list-style: none;
 }
-
+.greenMessage {
+  color: green;
+  margin-left: 50px;
+}
 .oneHeader {
   padding-left: 15px;
 }

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="./css/font-awesome.min.css">
     <title>Good Activities</title>
   </head>
-  <body>
+  <body class="darkBody">
     <div id="app" class="wagHeader">
       <ul class="wagList">
         <li v-on:click="goHome">Home</li>
@@ -16,7 +16,11 @@
     </div>
     <h1>Positive Activities</h1>
       <div id="goodAct">
-
+          <h4 class="greenMessage">{{message}}</h4>
+        <ul>
+          <li class="lists" v-for="a in activities">{{a.actName}} - {{a.actType}}
+            <button class="doButton" v-on:click="doActivity(a)">Do this Activity</button></li>
+        </ul>
       </div>
     <script src="./js/vue.js"></script>
     <script src="js/vue-resource.min.js"></script>

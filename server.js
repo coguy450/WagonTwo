@@ -38,9 +38,11 @@ app.post('/addActivity', (req, res) => {
 });
 
 app.post('/doActivity', (req, res) => {
+  console.log(req.body);
   conMongo((db) => {
     var activity = db.collection('actions');
       activity.insert(req.body, (err, result) => {
+        console.log(err, result);
         if (err) {
           res.status(400).send(err);
         } else {
