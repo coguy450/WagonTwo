@@ -18,9 +18,11 @@ app.get('/activities', actions.activities);
 app.get('/badActivities', actions.badActivities);
 app.get('/goodActivities', actions.goodActivities);
 app.get('/actions', actions.actionsDone);
-app.get('/login', action.login);
+app.get('/login', actions.login);
 
-
+process.on('uncaughtException', function (err) {
+    console.log(err);
+}); 
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });

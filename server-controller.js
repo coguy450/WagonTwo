@@ -15,7 +15,15 @@ var conMongo = ((callback) => {
     callback(thisDB);
   }
 })
-
+function eatCookie(reqIn) {
+  //console.log('eating cookie');
+  const cookieIn = reqIn.headers.cookie;
+  let thisCookie = cookie.parse(cookieIn);
+  thisCookie = thisCookie['wagon'];
+  const subCookie = thisCookie.substring(12,thisCookie.length -2);
+//  console.log(thisCookie);
+  return subCookie;
+}
 exports.addActivity = (req, res) => {
   conMongo((db) => {
     var activity = db.collection('activities');
@@ -31,11 +39,11 @@ exports.addActivity = (req, res) => {
   });
 };
 exports.doActivity = (req, res) => {
-  console.log(req.body);
+  const uEmail = eatCookie(req);
   conMongo((db) => {
     var activity = db.collection('actions');
       activity.insert(req.body, (err, result) => {
-        console.log(err, result);
+      //  console.log(err, result);
         if (err) {
           res.status(400).send(err);
         } else {
@@ -70,16 +78,9 @@ exports.goodActivities = (req, res) => {
   })
 }
 
-function eatCookie(reqIn) {
-  const cookieIn = req.headers.cookie;
-  let thisCookie = cookie.parse(cookieIn);
-  thisCookie = thisCookie['wagon'];
-  console.log(thisCookie);
-  return thisCookie;
-}
+
 exports.actionsDone = (req, res) => {
   const uEmail = eatCookie(req);
-  console.log(uEmail);
   conMongo((db) => {
     var actions = db.collection('actions');
     actions.find({email: uEmail}).toArray((err, results) => {
