@@ -70,3 +70,14 @@ exports.goodActivities = (req, res) => {
     })
   })
 }
+
+exports.actionsDone = (req, res) => {
+  const uEmail = req.body.email;
+  conMongo((db) => {
+    var actions = db.collection('actions');
+    actions.find({}).toArray((err, results) => {
+      if (err) console.error(err);
+      res.status(200).send(results);
+    })
+  })
+}

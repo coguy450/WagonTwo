@@ -16,6 +16,7 @@ app.post('/doActivity', actions.doActivity);
 app.get('/activities', actions.activities);
 app.get('/badActivities', actions.badActivities);
 app.get('/goodActivities', actions.goodActivities);
+app.get('/actionsDone', actions.actionsDone);
 
 
 
