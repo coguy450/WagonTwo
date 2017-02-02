@@ -20,6 +20,7 @@ app.get('/goodActivities', actions.goodActivities);
 app.get('/actions', actions.actionsDone);
 app.get('/login', actions.login);
 app.post('/actions', actions.updateActions);
+app.delete('/deleteActivity', actions.deleteActivity);
 
 process.on('uncaughtException', function (err) {
     console.error(err);

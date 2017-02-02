@@ -77,7 +77,16 @@ exports.goodActivities = (req, res) => {
     })
   })
 }
-
+exports.deleteActivity = (req, res) => {
+  const uEmail = eatCookie(req);
+  conMongo((db) => {
+    var actions = db.collection('actions');
+    actions.remove({email: uEmail, _id: req.query.actId}, {justOne: true}, (delResult) => {
+      if (err) console.error(err);
+      else res.status(200).send(results);
+    })
+  })
+}
 exports.actionsDone = (req, res) => {
   const uEmail = eatCookie(req);
   conMongo((db) => {

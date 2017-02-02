@@ -20,7 +20,7 @@ var goodAct = new Vue({
       delete activity._id;
       activity.date = new Date();
       this.$http.post('/doActivity', activity).then(response => {
-          this.message = 'Activity added';
+          this.message = 'Good luck doing that activity, please rate it later';
       });
     }
   }
