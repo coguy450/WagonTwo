@@ -18,12 +18,11 @@ var addAct = new Vue({
   },
   methods: {
     addForm: function () {
-
       this.$http.post('/addActivity', this.newActivity).then(response => {
         console.log(response);
         this.newActivity = {actType: 'Positive', newCategory: 'Exercise'};
         this.message = "Activity Added";
-
+        this.error = null;
         curAct._data.activities = response.data;
      }, err => {
        console.log(err)

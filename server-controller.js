@@ -16,15 +16,31 @@ var conMongo = ((callback) => {
   }
 })
 function eatCookie(reqIn) {
-  //console.log('eating cookie');
   const cookieIn = reqIn.headers.cookie;
   let thisCookie = cookie.parse(cookieIn);
   thisCookie = thisCookie['wagon'];
   const subCookie = thisCookie.substring(12,thisCookie.length -2);
-//  console.log(thisCookie);
   return subCookie;
 }
+
+exports.isUser = (req, res, next) => {
+  const cookieIn = req.headers.cookie;
+  if (cookieIn) {
+    let thisCookie = cookie.parse(cookieIn);
+    thisCookie = thisCookie['wagon'];
+    console.log('testing security', thisCookie);
+    if (thisCookie) {
+      next()
+    } else {
+      res.status(403).send('You are not authorized');
+    }
+  } else {
+    res.status(403).send('You are not authorized');
+  }
+};
+
 exports.addActivity = (req, res) => {
+  console.log('adding activity');
   conMongo((db) => {
     var activity = db.collection('activities');
       activity.insert(req.body, (err, result) => {

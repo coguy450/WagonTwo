@@ -3,6 +3,7 @@ var app = express();
 var MongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
 var fs = require('fs');
+
 var cookieParser = require('cookie-parser');
 var connectionString = 'mongodb://localhost/wagon2';
 var actions = require('./server-controller');
@@ -12,7 +13,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.post('/addActivity', actions.addActivity);
+
+
+app.post('/addActivity', [actions.isUser, actions.addActivity]);
 app.post('/doActivity', actions.doActivity);
 app.get('/activities', actions.activities);
 app.get('/badActivities', actions.badActivities);
