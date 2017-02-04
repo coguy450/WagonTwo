@@ -37,3 +37,11 @@ var goodDiv = new Vue({
     }
   }
 })
+var rateDiv = new Vue({
+  el: '#rate',
+  methods: {
+    showRate: function () {
+      location.href = "/rateActivities.html";
+    }
+  }
+})

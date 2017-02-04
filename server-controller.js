@@ -55,7 +55,12 @@ exports.addActivity = (req, res) => {
   });
 };
 exports.doActivity = (req, res) => {
-  const uEmail = eatCookie(req);
+  try {
+    const uEmail = eatCookie(req);
+  } catch (err){
+    console.log('this guy needs a cookie and he should log in');
+  }
+
   conMongo((db) => {
     var activity = db.collection('actions');
       activity.insert(req.body, (err, result) => {
