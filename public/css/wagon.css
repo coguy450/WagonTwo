@@ -63,7 +63,9 @@ i {
   width: 140px;
   border-radius: 20px;
 }
-
+[v-cloak] {
+  display: none;
+}
 .flexyDiv:hover {
   background-color: #A80000;
 }
