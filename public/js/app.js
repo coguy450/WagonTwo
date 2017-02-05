@@ -45,3 +45,12 @@ var rateDiv = new Vue({
     }
   }
 })
+
+var reportDiv = new Vue({
+  el: '#reports',
+  methods: {
+    showReport: function () {
+      location.href = "/reports.html";
+    }
+  }
+})

@@ -1,7 +1,9 @@
-var MongoClient = require('mongodb').MongoClient;
-var bodyParser = require('body-parser');
-var connectionString = 'mongodb://localhost/wagon2';
-var cookie = require('cookie');
+const MongoClient = require('mongodb').MongoClient;
+const bodyParser = require('body-parser');
+// const connectionString = 'mongodb://localhost/wagon2';
+const connectionString = 'mongodb://coguy450:Col2nago@ds033086.mlab.com:33086/wagontwo'
+const cookie = require('cookie');
+const ObjectID = require('mongodb').ObjectID;
 
 var thisDB;
 var conMongo = ((callback) => {
@@ -15,6 +17,20 @@ var conMongo = ((callback) => {
     callback(thisDB);
   }
 })
+
+
+function convertToObjectId(idIn) {
+  let aId;
+  try {
+      aId = new ObjectID(idIn);
+  }
+  catch(err) {
+      console.log(err);
+      aId = false;
+  }
+  return aId;
+}
+
 function eatCookie(reqIn) {
   const cookieIn = reqIn.headers.cookie;
   let thisCookie = cookie.parse(cookieIn);
@@ -84,7 +100,9 @@ exports.activities = (req, res) => {
 exports.badActivities = (req, res) => {
   conMongo((db) => {
     var activity = db.collection('activities');
-    activity.find({actType: 'Negative'}).toArray((err, results) => {
+    activity.find({$or: [{actType: 'Negative'}, {actType: 'Nuetral'}]}).toArray((err, results) => {
+      if (err) res.status(400).send(err);
+      console.log(results);
       res.status(200).send(results);
     })
   })
@@ -92,7 +110,7 @@ exports.badActivities = (req, res) => {
 exports.goodActivities = (req, res) => {
   conMongo((db) => {
     var activity = db.collection('activities');
-    activity.find({$or: [{actType: 'Positive'}, {actType: 'Nuetral'}]}).toArray((err, results) => {
+    activity.find().toArray((err, results) => {
       if (err) console.error(err);
       res.status(200).send(results);
     })
@@ -110,9 +128,10 @@ exports.deleteActivity = (req, res) => {
 }
 exports.actionsDone = (req, res) => {
   const uEmail = eatCookie(req);
+  const unratedAct = {email: uEmail, $or: [{rating: {$exists: false}}, {desc: {$exists: false}}]};
   conMongo((db) => {
     var actions = db.collection('actions');
-    actions.find({email: uEmail}).toArray((err, results) => {
+    actions.find(unratedAct).toArray((err, results) => {
       if (err) console.error(err);
       res.status(200).send(results);
     })
@@ -121,13 +140,48 @@ exports.actionsDone = (req, res) => {
 
 exports.updateActions = (req, res) => {
   const uEmail = eatCookie(req);
+  const unratedAct = {email: uEmail, $or: [{rating: {$exists: false}}, {desc: {$exists: false}}]};
+  const oId = convertToObjectId(req.body._id);
   conMongo((db) => {
     var actions = db.collection('actions');
-    actions.updateOne({_id: req.body._id}, req.body, (uErr, uRes) => {
-      console.log();
+    delete req.body._id;
+    actions.updateOne({_id: oId}, req.body, (uErr, uRes) => {
+      if (uErr) console.log(uErr);
+      else console.log(uRes.result);
+      actions.find(unratedAct).toArray((fErr, fResults) => {
+        res.status(200).send(fResults);
+      })
     })
   })
 }
+
+exports.pastActions = (req, res) => {
+  const uEmail = eatCookie(req);
+  const unratedAct = {email: uEmail, $or: [{rating: {$exists: true}}, {desc: {$exists: true}}]};
+  conMongo((db) => {
+    var actions = db.collection('actions');
+    actions.find(unratedAct).toArray((err, results) => {
+      if (err) console.error(err);
+      res.status(200).send(results);
+    })
+  })
+}
+
+exports.getRatings = (req, res) => {
+  const uEmail = eatCookie(req);
+  conMongo((db) => {
+    const actions = db.collection('actions');
+    actions.aggregate([{ $match: {user: uEmail}},
+       {$group: {_id: '$actName',
+            Avg: { $avg: '$rating'}
+        }}, {$sort: {Avg: 1}}
+      ], function (err, results) {
+          res.send({success:true, ratings: results});
+      });
+  })
+
+}
+
 
 exports.login = (req, res) => {
   res.cookie('wagon',{email: 'coguy450@gmail.com'}, {maxAge: 604800000, httpOnly: true, path: '/'}).status(200).send('You are logged in dude');

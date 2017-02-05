@@ -5,11 +5,13 @@
   margin: 0px;
 }
 .lists {
-  height: 40px;
+  min-height: 40px;
   font-size: 20px;
   font-family: garamond;
   padding: 3px;
   border-bottom: 1.25px solid grey;
+  align-items: center;
+  align-content: center;
 }
 ul {
   list-style: none;
@@ -74,14 +76,46 @@ button {
   color: white;
   font-size: 14px;
 }
-
-.doButton {
-  background-color: #004225;
-}
-button:active {
-	background-color: #686868;
+.dateText {
+  font-size: 14px;
 }
 
-.flexyDiv:active {
-	background-color: #686868;
+.muchBetterButton {
+  background-color: green;
 }
+.rButton {
+  color: white;
+  border-radius: 8px;
+  height: 22px;
+  font-size: 11px;
+
+}
+.descBtn {
+  border-radius: 8px;
+  height: 25px;
+  font-size: 12px;
+  padding-top: -20px;
+}
+.descSpan {
+  align-items: center;
+}
+
+.littleBetterButton {
+
+}
+
+.sameButton {
+
+}
+
+.littleWorsebutton {
+
+}
+
+.wayWorseButton {
+  background-color: #B22222;
+}
+
+.doButton {background-color: #004225;}
+button:active {background-color: #686868;}
+.flexyDiv:active {background-color: #686868;}

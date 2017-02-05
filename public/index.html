@@ -16,13 +16,9 @@
     </div>
     <h1>Time Again for Wagon Time</h1>
     <div class="wagIcons">
-      <div id="bad" class="flexyDiv" v-on:click="showBad">
-        <i class="fa fa-beer fa-3x" aria-hidden="true"></i> <br/>
-          <div>{{message}}</div>
-      </div>
       <div class="flexyDiv" id="goodDiv" v-on:click="showGood">
         <i class="fa fa-bicycle fa-3x" aria-hidden="true"></i><br>
-        <div>Positive Activities</div>
+        <div>Activities</div>
       </div>
       <div class="flexyDiv" id="rate" v-on:click="showRate">
         <i class="fa fa-star fa-3x" aria-hidden="true"></i>
@@ -32,7 +28,7 @@
         <i class="fa fa-plus-square fa-3x" aria-hidden="true"></i>
         <div>Add New</div>
       </div>
-      <div class="flexyDiv">
+      <div class="flexyDiv" id="reports" v-on:click="showReport">
         <i class="fa fa-bar-chart fa-3x" aria-hidden="true"></i>
         <div>Reports</div>
       </div>
@@ -45,7 +41,7 @@
 
 
 
-    <script src="./js/vue.js"></script>
+    <script src="./js/vue.min.js"></script>
     <script src="./js/vue-resource.min.js"></script>
     <script src="js/app.js" type="text/javascript"></script>
   </body>

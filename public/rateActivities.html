@@ -9,16 +9,30 @@
   <body class="darkBody">
     <div id="app" class="wagHeader">
       <ul class="wagList">
-        <li>Track</li>
+        <li v-on:click="goHome">Home</li>
         <li>Profile</li>
         <li>Sign in/out</li>
       </ul>
     </div>
-    <h1>Rate Activities</h1>
+    <h1>How did these make you feel</h1>
     <div id="rateAct">
       <ul>
-        <li>List items</li>
-        <li class="lists" v-for="a in actions">{{a.actName}} on {{a.date | date}}</li>
+        <li class="lists" v-for="a in actions">
+          {{a.actName}} on <span class="dateText">{{a.date | date}}</span>
+          <span v-if="!a.rating">
+            <button type="button" class="muchBetterButton rButton" name="button" v-on:click="rateThis(4, a)">Way Better</button>
+            <button type="button" class="littleBetterButton rButton" v-on:click="rateThis(3, a)">A Little Better</button>
+            <button type="button" class="sameButton rButton" v-on:click="rateThis(2, a)">The Same</button>
+            <button type="button" class="littleWorsebutton rButton" v-on:click="rateThis(1, a)">A little Worse</button>
+            <button type="button" class="wayWorseButton rButton" v-on:click="rateThis(0, a)">Way Worse</button>
+          </span>
+          <span v-if="a.rating && !a.desc" class="descSpan">
+            <textarea rows="2" cols="50" v-model="a.desc" class="textAreaPad" placeholder="Enter some notes about the activity">
+            </textarea>
+            <button type="button" class="muchBetterButton descBtn" v-on:click="addNotes(a)">Add Notes</button>
+          </span>
+          <span v-if="a.rating && a.desc">Activity is all done rating</span>
+        </li>
       </ul>
     </div>
     <script src="./js/vue.js"></script>

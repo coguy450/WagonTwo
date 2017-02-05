@@ -3,10 +3,28 @@ var rateAct = new Vue({
   data: {
     actions: null,
   },
-  created: function() {
+  methods: {
+    rateThis: function(rating, activity) {
+      activity.rating = rating;
+      this.$http.post('/actions', activity).then(response => {
+        this.actions = response.data;
+      }, (err) => {
+        console.error(err);
+      })
+    },
+    addNotes: function(activity) {
+      console.log(activity);
+      this.$http.post('/actions', activity).then(response => {
+        this.actions = response.data;
+      }, (err) => {
+        console.error(err);
+      });
+    }
+  },
+
+  beforeCreate: function() {
     this.$http.get('/actions').then(response => {
       this.actions = response.data;
-
       console.log(response.data);
     }, (err) => {
       console.log(err);
@@ -14,7 +32,6 @@ var rateAct = new Vue({
   },
   filters: {
     date: function(val) {
-      console.log('filtering: ', val);
       const f = new Date(val);
       const fYear = f.getFullYear();
       const fMonth = f.getMonth() + 1;
@@ -24,6 +41,15 @@ var rateAct = new Vue({
       const AMPM = f.getHours() > 12 ? 'PM' : 'AM';
       const formattedDate = fMonth + '/' + fDay + '/' + fYear + ' at ' + fHour + ':' + fMinutes + AMPM;
       return formattedDate;
+    }
+  }
+})
+
+var app = new Vue({
+  el: '#app',
+  methods: {
+    goHome: () => {
+      location.href= "/";
     }
   }
 })
