@@ -2,7 +2,7 @@ const myEmail = 'coguy450@gmail.com';
 var goodAct = new Vue({
   el: '#goodAct',
   data: {
-    message: 'Test message',
+    message: '',
     activities: {}
   },
   created: function() {
@@ -21,6 +21,7 @@ var goodAct = new Vue({
       activity.date = new Date();
       this.$http.post('/doActivity', activity).then(response => {
           this.message = 'Good luck doing that activity, please rate it later';
+          location.href = "/reports.html";
       });
     }
   }

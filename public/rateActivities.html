@@ -15,7 +15,7 @@
       </ul>
     </div>
     <h1>How did these make you feel</h1>
-    <div id="rateAct">
+    <div id="rateAct" v-cloak>
       <ul>
         <li class="lists" v-for="a in actions">
           {{a.actName}} on <span class="dateText">{{a.date | date}}</span>

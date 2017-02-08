@@ -4,6 +4,9 @@
   padding: 0px;
   margin: 0px;
 }
+h1 {
+  text-align: center;
+}
 .lists {
   min-height: 40px;
   font-size: 20px;
@@ -52,6 +55,7 @@ i {
   display: flex;
   flex-direction: row;
   flex-wrap:wrap;
+  justify-content: center;
 }
 .flexyDiv {
   padding: 25px 5px 10px 5px;
@@ -103,15 +107,15 @@ button {
 }
 
 .littleBetterButton {
-
+  background-color: #6495ED;
 }
 
 .sameButton {
-
+  background-color: #0000cc;
 }
 
 .littleWorsebutton {
-
+  background-color:#ff8000;
 }
 
 .wayWorseButton {
