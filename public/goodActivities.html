@@ -18,10 +18,17 @@
     <h1>Activities</h1>
       <div id="goodAct" v-cloak>
           <h4 class="greenMessage">{{message}}</h4>
-        <ul>
+        <ul v-if="!showPreviousNotes">
           <li class="lists" v-for="a in activities">{{a.actName}} - {{a.actType}}
             <button class="doButton" v-on:click="doActivity(a)">Do it</button></li>
         </ul>
+        <div class="" v-if="showPreviousNotes">
+          <ul>
+            <li class="lists" v-for="p in prev">{{p.desc}}</li>
+          </ul>
+          <button type="button" v-on:click="goRate" class="muchBetterButton" name="button">Go Rate It</button>
+        </div>
+
       </div>
     <script src="./js/vue.js"></script>
     <script src="js/vue-resource.min.js"></script>

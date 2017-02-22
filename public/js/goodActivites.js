@@ -3,7 +3,9 @@ var goodAct = new Vue({
   el: '#goodAct',
   data: {
     message: '',
-    activities: {}
+    activities: {},
+    showPreviousNotes: false,
+    prev: [],
   },
   created: function() {
     this.$http.get('/goodActivities').then(response => {
@@ -21,8 +23,14 @@ var goodAct = new Vue({
       activity.date = new Date();
       this.$http.post('/doActivity', activity).then(response => {
           this.message = 'Good luck doing that activity, please rate it later';
-          location.href = "/reports.html";
+          this.showPreviousNotes = true;
+          this.prev = response.data;
+      //    location.href = "/reports.html";
+
       });
+    },
+    goRate: () => {
+      location.href = "/rateActivities.html"
     }
   }
 

@@ -76,15 +76,18 @@ exports.doActivity = (req, res) => {
   } catch (err){
     console.log('this guy needs a cookie and he should log in');
   }
-
+  const actDone = req.body.actName;
   conMongo((db) => {
     var activity = db.collection('actions');
       activity.insert(req.body, (err, result) => {
+
       //  console.log(err, result);
         if (err) {
           res.status(400).send(err);
         } else {
-          res.status(200).send(result);
+          activity.find({actName: actDone, rating: {$exists: true}, desc: {$exists: true}}).toArray((fErr, prevNotes) => {
+            res.status(200).send(prevNotes);
+          })
         }
       });
   });
