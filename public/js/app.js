@@ -54,3 +54,11 @@ var reportDiv = new Vue({
     }
   }
 })
+var checkinDiv = new Vue({
+  el: '#checkin',
+  methods: {
+    showCheckin: function () {
+      location.href = "/checkin.html";
+    }
+  }
+})

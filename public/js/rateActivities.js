@@ -2,12 +2,15 @@ var rateAct = new Vue({
   el: '#rateAct',
   data: {
     actions: null,
+    loading: false,
   },
   methods: {
     rateThis: function(rating, activity) {
+      loading = true;
       activity.rating = rating;
       this.$http.post('/actions', activity).then(response => {
         this.actions = response.data;
+        this.loading = false;
       }, (err) => {
         console.error(err);
       })

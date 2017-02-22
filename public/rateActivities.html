@@ -15,7 +15,7 @@
       </ul>
     </div>
     <h1>How did these make you feel</h1>
-    <div id="rateAct" v-cloak>
+    <div id="rateAct" v-cloak v-if="!loading">
       <ul>
         <li class="lists" v-for="a in actions">
           {{a.actName}} on <span class="dateText">{{a.date | date}}</span>
@@ -34,6 +34,9 @@
           <span v-if="a.rating && a.desc">Activity is all done rating</span>
         </li>
       </ul>
+    </div>
+    <div v-if="loading">
+      <i class="fa fa-spinner" aria-hidden="true"></i>
     </div>
     <script src="./js/vue.js"></script>
     <script src="./js/vue-resource.min.js"></script>

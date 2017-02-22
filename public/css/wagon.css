@@ -96,6 +96,23 @@ button {
   font-size: 11px;
 
 }
+
+.sButton {
+  display: flex;
+  flex-wrap:wrap;
+  color: white;
+  border-radius: 2px;
+  height: 32px;
+  font-size: 14px;
+  width: 100px;
+}
+.checkinSpan {
+  display: flex;
+  justify-content: center;
+  flex-wrap:wrap;
+  width: 100%;
+  align-items: center;
+}
 .descBtn {
   border-radius: 8px;
   height: 25px;
