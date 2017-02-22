@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/font-awesome.min.css">
     <title>Check-in</title>
   </head>
-  <body class="darkBody">
+  <body class="darkBody" >
     <div id="app" class="wagHeader" v-cloak>
       <ul class="wagList">
         <li v-on:click="goHome">Home</li>
@@ -17,18 +17,26 @@
       </ul>
     </div>
     <h2>How do you Feel Today Activity</h2>
-    <div class="flexDiv">
+    <div class="flexDiv" id="checkinDiv" >
+      <h4>{{message}}</h4>
       <div class="checkinSpan">
-        <button type="button" class="muchBetterButton sButton" name="button" v-on:click="rateThis(4, a)">I feel great</button>
-        <button type="button" class="littleBetterButton sButton" v-on:click="rateThis(3, a)">Pretty good</button>
-        <button type="button" class="sameButton sButton" v-on:click="rateThis(2, a)">OK</button>
-        <button type="button" class="littleWorsebutton sButton" v-on:click="rateThis(1, a)">A little Down</button>
-        <button type="button" class="wayWorseButton sButton" v-on:click="rateThis(0, a)">Really Bad</button>
+        <button type="button" class="muchBetterButton sButton" name="button" v-on:click="doCheckin(4)">I feel great</button>
+        <button type="button" class="littleBetterButton sButton" v-on:click="doCheckin(3)">Pretty good</button>
+        <button type="button" class="sameButton sButton" v-on:click="doCheckin(2)">OK</button>
+        <button type="button" class="littleWorsebutton sButton" v-on:click="doCheckin(1)">A little Down</button>
+        <button type="button" class="wayWorseButton sButton" v-on:click="doCheckin(0)">Really Bad</button>
       </div>
+      <div class="notesSpan">
+        <textarea name="name" rows="8" cols="80" v-model="notes.note"
+        placeholder="Write some notes about how you feel today"></textarea>
+        <br />
+      </div>
+      <button type="button" name="button" v-on:click="checkinNotes">Add Notes</button>
+
     </div>
-    <script src="./js/vue.min.js"></script>
+    <script src="./js/vue.js"></script>
     <script src="js/vue-resource.min.js"></script>
-    <script src="js/addActivity.js" type="text/javascript"></script>
+    <script src="js/checkin.js" type="text/javascript"></script>
     </script>
   </body>
 </html>

@@ -179,9 +179,41 @@ exports.getRatings = (req, res) => {
           res.send({success:true, ratings: results});
       });
   })
-
 }
 
+exports.checkin = (req, res) => {
+  const newCheckin = req.body;
+  const uEmail = eatCookie(req);
+  newCheckin.date = new Date();
+  newCheckin.user = uEmail;
+  conMongo((db) => {
+    const checkins = db.collection('checkins');
+    checkins.insert(newCheckin, (err, result) => {
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        res.status(200).send(result)
+      }
+    });
+  })
+}
+
+exports.checkinNotes = (req, res) => {
+  const newCheckin = req.body;
+  const uEmail = eatCookie(req);
+  newCheckin.date = new Date();
+  newCheckin.user = uEmail;
+  conMongo((db) => {
+    const checkins = db.collection('checkins');
+    checkins.insert(newCheckin, (err, result) => {
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        res.status(200).send(result)
+      }
+    });
+  })
+}
 
 exports.login = (req, res) => {
   res.cookie('wagon',{email: 'coguy450@gmail.com'}, {maxAge: 604800000, httpOnly: true, path: '/'}).status(200).send('You are logged in dude');

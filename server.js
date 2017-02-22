@@ -28,7 +28,8 @@ app.get('/pastActions', actions.pastActions);
 app.post('/actions', actions.updateActions);
 app.delete('/deleteActivity', actions.deleteActivity);
 app.get('/getRatings', actions.getRatings);
-
+app.post('/checkin', actions.checkin);
+app.post('/checkinNotes', actions.checkinNotes);
 process.on('uncaughtException', function (err) {
     console.error(err);
 });
