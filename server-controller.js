@@ -1,10 +1,11 @@
-const MongoClient = require('mongodb').MongoClient;
-const bodyParser = require('body-parser');
-// const connectionString = 'mongodb://localhost/wagon2';
-const connectionString = 'mongodb://coguy450:Col2nago@ds033086.mlab.com:33086/wagontwo'
-const cookie = require('cookie');
-const ObjectID = require('mongodb').ObjectID;
-
+var MongoClient = require('mongodb').MongoClient;
+var bodyParser = require('body-parser');
+var connectionString = 'mongodb://localhost/test';
+// var connectionString = 'mongodb://coguy450:Col2nago@ds033086.mlab.com:33086/wagontwo'
+var cookie = require('cookie');
+var ObjectID = require('mongodb').ObjectID;
+var request = require('superagent')
+var apiKey = '400f0ae9826281a7931208be31f9bee76a1c8633'
 var thisDB;
 var conMongo = ((callback) => {
   if (!thisDB) {
@@ -20,7 +21,7 @@ var conMongo = ((callback) => {
 
 
 function convertToObjectId(idIn) {
-  let aId;
+  var aId;
   try {
       aId = new ObjectID(idIn);
   }
@@ -32,17 +33,17 @@ function convertToObjectId(idIn) {
 }
 
 function eatCookie(reqIn) {
-  const cookieIn = reqIn.headers.cookie;
-  let thisCookie = cookie.parse(cookieIn);
+  var cookieIn = reqIn.headers.cookie;
+  var thisCookie = cookie.parse(cookieIn);
   thisCookie = thisCookie['wagon'];
-  const subCookie = thisCookie.substring(12,thisCookie.length -2);
+  var subCookie = thisCookie.substring(12,thisCookie.length -2);
   return subCookie;
 }
 
 exports.isUser = (req, res, next) => {
-  const cookieIn = req.headers.cookie;
+  var cookieIn = req.headers.cookie;
   if (cookieIn) {
-    let thisCookie = cookie.parse(cookieIn);
+    var thisCookie = cookie.parse(cookieIn);
     thisCookie = thisCookie['wagon'];
     console.log('testing security', thisCookie);
     if (thisCookie) {
@@ -54,7 +55,19 @@ exports.isUser = (req, res, next) => {
     res.status(403).send('You are not authorized');
   }
 };
-
+exports.getAverages = (req, res) => {
+  console.time('avg');
+  var uEmail = eatCookie(req);
+  conMongo((db) => {
+    var actions = db.collection('actions');
+    actions.aggregate([{$match: {user: uEmail}},{ $group: {_id: '$actName',Avg: { $avg: '$rating'}}}])
+    .toArray((err, accts) => {
+      console.timeEnd('avg');
+      res.status(200).send(accts);
+      console.log( accts);
+    })
+  });
+}
 exports.addActivity = (req, res) => {
   console.log('adding activity');
   conMongo((db) => {
@@ -72,11 +85,11 @@ exports.addActivity = (req, res) => {
 };
 exports.doActivity = (req, res) => {
   try {
-    const uEmail = eatCookie(req);
+    var uEmail = eatCookie(req);
   } catch (err){
     console.log('this guy needs a cookie and he should log in');
   }
-  const actDone = req.body.actName;
+  var actDone = req.body.actName;
   conMongo((db) => {
     var activity = db.collection('actions');
       activity.insert(req.body, (err, result) => {
@@ -120,7 +133,7 @@ exports.goodActivities = (req, res) => {
   })
 }
 exports.deleteActivity = (req, res) => {
-  const uEmail = eatCookie(req);
+  var uEmail = eatCookie(req);
   conMongo((db) => {
     var actions = db.collection('actions');
     actions.remove({email: uEmail, _id: req.query.actId}, {justOne: true}, (delResult) => {
@@ -130,8 +143,8 @@ exports.deleteActivity = (req, res) => {
   })
 }
 exports.actionsDone = (req, res) => {
-  const uEmail = eatCookie(req);
-  const unratedAct = {email: uEmail, $or: [{rating: {$exists: false}}, {desc: {$exists: false}}]};
+  var uEmail = eatCookie(req);
+  var unratedAct = {email: uEmail, $or: [{rating: {$exists: false}}, {desc: {$exists: false}}]};
   conMongo((db) => {
     var actions = db.collection('actions');
     actions.find(unratedAct).toArray((err, results) => {
@@ -140,11 +153,10 @@ exports.actionsDone = (req, res) => {
     })
   })
 }
-
 exports.updateActions = (req, res) => {
-  const uEmail = eatCookie(req);
-  const unratedAct = {email: uEmail, $or: [{rating: {$exists: false}}, {desc: {$exists: false}}]};
-  const oId = convertToObjectId(req.body._id);
+  var uEmail = eatCookie(req);
+  var unratedAct = {email: uEmail, $or: [{rating: {$exists: false}}, {desc: {$exists: false}}]};
+  var oId = convertToObjectId(req.body._id);
   conMongo((db) => {
     var actions = db.collection('actions');
     delete req.body._id;
@@ -157,10 +169,9 @@ exports.updateActions = (req, res) => {
     })
   })
 }
-
 exports.pastActions = (req, res) => {
-  const uEmail = eatCookie(req);
-  const unratedAct = {email: uEmail, $or: [{rating: {$exists: true}}, {desc: {$exists: true}}]};
+  var uEmail = eatCookie(req);
+  var unratedAct = {email: uEmail, $or: [{rating: {$exists: true}}, {desc: {$exists: true}}]};
   conMongo((db) => {
     var actions = db.collection('actions');
     actions.find(unratedAct).toArray((err, results) => {
@@ -169,11 +180,10 @@ exports.pastActions = (req, res) => {
     })
   })
 }
-
 exports.getRatings = (req, res) => {
-  const uEmail = eatCookie(req);
+  var uEmail = eatCookie(req);
   conMongo((db) => {
-    const actions = db.collection('actions');
+    var actions = db.collection('actions');
     actions.aggregate([{ $match: {user: uEmail}},
        {$group: {_id: '$actName',
             Avg: { $avg: '$rating'}
@@ -183,14 +193,13 @@ exports.getRatings = (req, res) => {
       });
   })
 }
-
 exports.checkin = (req, res) => {
-  const newCheckin = req.body;
-  const uEmail = eatCookie(req);
+  var newCheckin = req.body;
+  var uEmail = eatCookie(req);
   newCheckin.date = new Date();
   newCheckin.user = uEmail;
   conMongo((db) => {
-    const checkins = db.collection('checkins');
+    var checkins = db.collection('checkins');
     checkins.insert(newCheckin, (err, result) => {
       if (err) {
         res.status(400).send(err);
@@ -200,14 +209,13 @@ exports.checkin = (req, res) => {
     });
   })
 }
-
 exports.checkinNotes = (req, res) => {
-  const newCheckin = req.body;
-  const uEmail = eatCookie(req);
+  var newCheckin = req.body;
+  var uEmail = eatCookie(req);
   newCheckin.date = new Date();
   newCheckin.user = uEmail;
   conMongo((db) => {
-    const checkins = db.collection('checkins');
+    var checkins = db.collection('checkins');
     checkins.insert(newCheckin, (err, result) => {
       if (err) {
         res.status(400).send(err);
@@ -216,6 +224,42 @@ exports.checkinNotes = (req, res) => {
       }
     });
   })
+}
+exports.checkVideos = (req, res) => {
+  // Guidebox API key: 400f0ae9826281a7931208be31f9bee76a1c8633
+  var searchType = req.body.type
+  var queryString = req.body.queryString
+  request
+   .get('http://api-public.guidebox.com/v2/search?api_key=400f0ae9826281a7931208be31f9bee76a1c8633')
+   .query({ type: searchType })
+   .query({ query: queryString })
+   .end(function(err, response){
+     if (err) {
+       console.log(err)
+     } else {
+       res.status(200).send(response.body)
+     }
+   });
+}
+
+exports.specificShow = (req, res) => {
+  var searchId = req.body.searchId;
+  var searchType = req.body.type === 'movie' ? 'movies' : req.body.type
+  // /v2/shows/{id}?sources=free,subscription
+  request
+   .get('http://api-public.guidebox.com/v2/' + searchType + '/' + searchId)
+   .query({api_key: apiKey})
+   .query({ sources: 'free,subscription' })
+   .end(function(err, response){
+     if (err) {
+       console.log(err)
+     } else {
+       res.status(200).send(response.body)
+       console.log(response.body)
+     }
+
+
+   });
 }
 
 exports.login = (req, res) => {

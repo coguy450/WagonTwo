@@ -1,4 +1,6 @@
-
+window.Vue = require('vue');
+window.VueRouter = require('vue-router');
+window.VueResource = require('vue-resource');
 
 var badDiv = new Vue({
   el: '#bad',

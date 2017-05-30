@@ -3,11 +3,11 @@ var app = express();
 var MongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
 var fs = require('fs');
-
+var actions = require('./server-controller');
 var cookieParser = require('cookie-parser');
 // var connectionString = 'mongodb://localhost/wagon2';
-const connectionString = 'mongodb://coguy450:Col2nago@ds033086.mlab.com:33086/wagontwo'
-var actions = require('./server-controller');
+var connectionString = 'mongodb://coguy450:Col2nago@ds033086.mlab.com:33086/wagontwo'
+
 
 app.set('port', (process.env.PORT || 12000));
 app.use(express.static(__dirname + '/public'));
@@ -18,6 +18,7 @@ app.use(cookieParser());
 
 
 app.post('/addActivity', [actions.isUser, actions.addActivity]);
+app.get('/activityAverages', actions.getAverages);
 app.post('/doActivity', actions.doActivity);
 app.get('/activities', actions.activities);
 app.get('/badActivities', actions.badActivities);
@@ -30,6 +31,8 @@ app.delete('/deleteActivity', actions.deleteActivity);
 app.get('/getRatings', actions.getRatings);
 app.post('/checkin', actions.checkin);
 app.post('/checkinNotes', actions.checkinNotes);
+app.post('/searchMovies', actions.checkVideos);
+app.post('/specificShow', actions.specificShow);
 process.on('uncaughtException', function (err) {
     console.error(err);
 });

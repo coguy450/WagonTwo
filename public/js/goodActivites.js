@@ -10,9 +10,14 @@ var goodAct = new Vue({
   created: function() {
     this.$http.get('/goodActivities').then(response => {
       this.activities = response.data;
-      console.log(response.data);
+    //  console.log(response.data);
     }, (err) => {
       console.log(err);
+    })
+    this.$http.get('/activityAverages').then(resp => {
+      console.log(resp.data);
+    }, (avgErr) => {
+      console.log(avgErr);
     })
   },
   methods: {
@@ -37,7 +42,7 @@ var goodAct = new Vue({
 })
 
 var app = new Vue({
-  el: '#app',
+  el: '#nav-mobile',
   methods: {
     goHome: () => {
       location.href= "/";

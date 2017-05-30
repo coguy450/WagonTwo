@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/wagon.css">
-    <link rel="stylesheet" href="./css/inputs.css">
-    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/materialize.min.css"/>
+
     <title>Add An Activity</title>
   </head>
   <body>
@@ -35,13 +35,16 @@
         <span class="bar"></span>
         <label>Activity Description</label>
       </div>
-      <div >
-        <select v-model="newActivity.actType" class="eSelect">
+
+      <div class="input-field col s12">
+        <select v-model="newActivity.actType">
           <option>Positive</option>
           <option>Negative</option>
           <option>Nuetral</option>
         </select>
+        <label>Type</label>
       </div>
+
       <div>
         <select v-model="newActivity.newCategory" class="eSelect">
           <option>Exercise</option>
