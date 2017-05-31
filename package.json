@@ -12,7 +12,7 @@
     "cookie-parser": "^1.4.3",
     "debug": "~2.0.0",
     "express": "~4.9.0",
-    "mongodb": "^2.2.27",
+    "mongodb": "^2.1.21",
     "mongodb-core": "^2.1.11",
     "superagent": "^3.5.2"
   }
