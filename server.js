@@ -1,12 +1,9 @@
 var express = require('express');
 var app = express();
-var MongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var actions = require('./server-controller');
 var cookieParser = require('cookie-parser');
-// var connectionString = 'mongodb://localhost/wagon2';
-var connectionString = 'mongodb://coguy450:Col2nago@ds033086.mlab.com:33086/wagontwo'
 
 
 app.set('port', (process.env.PORT || 12000));
