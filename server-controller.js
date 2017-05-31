@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
-var connectionString = process.env.PROD_MONGODB ? PROD_MONGODB : 'mongodb://localhost/test';
+var connectionString = process.env.PROD_MONGODB ? process.env.PROD_MONGODB : 'mongodb://localhost/test';
 
 var cookie = require('cookie');
 var ObjectID = require('mongodb').ObjectID;
