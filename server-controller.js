@@ -244,7 +244,12 @@ exports.checkVideos = (req, res) => {
 
 exports.specificShow = (req, res) => {
   var searchId = req.body.searchId;
-  var searchType = req.body.type === 'movie' ? 'movies' : req.body.type
+  var searchType;
+  if (req.body.type === 'movie') {
+    searchType = 'movies'
+  } else if (req.body.type === 'show') {
+    searchType = 'shows'
+  }
   // /v2/shows/{id}?sources=free,subscription
   request
    .get('http://api-public.guidebox.com/v2/' + searchType + '/' + searchId)
@@ -255,7 +260,6 @@ exports.specificShow = (req, res) => {
        console.log(err)
      } else {
        res.status(200).send(response.body)
-       console.log(response.body)
      }
 
 

@@ -1,7 +1,7 @@
 var reportsDiv = new Vue({
   el: '#movieDiv',
   data: {
-    selectedType: null,
+    selectedType: 'movie',
     queryString: null,
     results: null,
     sources: null
@@ -20,7 +20,12 @@ var reportsDiv = new Vue({
       console.log('search for this id', id)
       this.$http.post('/specificShow', {searchId: id, type: this.selectedType}).then(response => {
         console.log(response.data);
-        this.sources = response.data.subscription_web_sources
+        if (this.selectedType === 'movie') {
+          this.sources = response.data.subscription_web_sources
+        } else if (this.selectedType === 'show') {
+          this.sources = response.data.channels
+        }
+
       }, (err) => {
         console.log(err);
       })
