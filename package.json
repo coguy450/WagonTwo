@@ -6,6 +6,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "authenticate": "^0.1.5",
     "body-parser": "~1.8.1",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.3",
