@@ -254,7 +254,8 @@ exports.specificShow = (req, res) => {
   request
    .get('http://api-public.guidebox.com/v2/' + searchType + '/' + searchId)
    .query({api_key: apiKey})
-   .query({ sources: 'free,subscription' })
+   .query({ sources: 'free,subscription,netflix,purchase,tv_everywhere,amazon_prime' })
+   .query({platform: 'web'})
    .end(function(err, response){
      if (err) {
        console.log(err)

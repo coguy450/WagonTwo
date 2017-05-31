@@ -1,6 +1,6 @@
-window.Vue = require('vue');
-window.VueRouter = require('vue-router');
-window.VueResource = require('vue-resource');
+// window.Vue = require('vue');
+// window.VueRouter = require('vue-router');
+// window.VueResource = require('vue-resource');
 
 var badDiv = new Vue({
   el: '#bad',
@@ -44,6 +44,15 @@ var rateDiv = new Vue({
   methods: {
     showRate: function () {
       location.href = "/rateActivities.html";
+    }
+  }
+})
+
+var movieLink = new Vue({
+  el: '#movieLink',
+  methods: {
+    showMovies: function() {
+      location.href = "/movies.html";
     }
   }
 })
