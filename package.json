@@ -12,6 +12,7 @@
     "debug": "~2.0.0",
     "express": "~4.9.0",
     "mongodb": "^2.2.27",
+    "mongodb-core": "^2.1.11",
     "superagent": "^3.5.2"
   }
 }
