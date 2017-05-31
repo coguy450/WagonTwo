@@ -6,11 +6,6 @@ var reportsDiv = new Vue({
     results: null,
     sources: null
   },
-  created: function() {
-    $(document).ready(function() {
-       $('select').material_select();
-     });
-  },
   methods: {
     searchMovies: function () {
       console.log('calling function', this.queryString, this.selectedType)
@@ -29,9 +24,6 @@ var reportsDiv = new Vue({
       }, (err) => {
         console.log(err);
       })
-    },
-    updateType: function(value) {
-      console.log('updating type', value)
     }
   }
 
