@@ -5,7 +5,6 @@ var fs = require('fs');
 var actions = require('./server-controller');
 var cookieParser = require('cookie-parser');
 
-
 app.set('port', (process.env.PORT || 12000));
 app.use(express.static(__dirname + '/public'));
 // app.use('/favicon', express.static(__dirname + '/public/favicon.ico'))
@@ -28,8 +27,7 @@ app.delete('/deleteActivity', actions.deleteActivity);
 app.get('/getRatings', actions.getRatings);
 app.post('/checkin', actions.checkin);
 app.post('/checkinNotes', actions.checkinNotes);
-app.post('/searchMovies', actions.checkVideos);
-app.post('/specificShow', actions.specificShow);
+
 process.on('uncaughtException', function (err) {
     console.error(err);
 });

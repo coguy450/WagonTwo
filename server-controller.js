@@ -5,7 +5,6 @@ var connectionString = process.env.PROD_MONGODB ? process.env.PROD_MONGODB : 'mo
 var cookie = require('cookie');
 var ObjectID = require('mongodb').ObjectID;
 var request = require('superagent')
-var apiKey = '400f0ae9826281a7931208be31f9bee76a1c8633'
 var thisDB;
 var conMongo = ((callback) => {
   if (!thisDB) {
@@ -225,48 +224,6 @@ exports.checkinNotes = (req, res) => {
     });
   })
 }
-exports.checkVideos = (req, res) => {
-  // Guidebox API key: 400f0ae9826281a7931208be31f9bee76a1c8633
-  var searchType = req.body.type
-  var queryString = req.body.queryString
-  request
-   .get('http://api-public.guidebox.com/v2/search?api_key=400f0ae9826281a7931208be31f9bee76a1c8633')
-   .query({ type: searchType })
-   .query({ query: queryString })
-   .end(function(err, response){
-     if (err) {
-       console.log(err)
-     } else {
-       res.status(200).send(response.body)
-     }
-   });
-}
-
-exports.specificShow = (req, res) => {
-  var searchId = req.body.searchId;
-  var searchType;
-  if (req.body.type === 'movie') {
-    searchType = 'movies'
-  } else if (req.body.type === 'show') {
-    searchType = 'shows'
-  }
-  // /v2/shows/{id}?sources=free,subscription
-  request
-   .get('http://api-public.guidebox.com/v2/' + searchType + '/' + searchId)
-   .query({api_key: apiKey})
-   .query({ sources: 'free,subscription,netflix,purchase,tv_everywhere,amazon_prime' })
-   .query({platform: 'web'})
-   .end(function(err, response){
-     if (err) {
-       console.log(err)
-     } else {
-       res.status(200).send(response.body)
-     }
-
-
-   });
-}
-
 exports.login = (req, res) => {
   res.cookie('wagon',{email: 'coguy450@gmail.com'}, {maxAge: 604800000, httpOnly: true, path: '/'}).status(200).send('You are logged in dude');
 }
