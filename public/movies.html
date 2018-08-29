@@ -30,7 +30,7 @@
       <div class="" v-if="sources">
         <span>Available on: </span><span v-if="sources && sources.length === 0">NOWHERE</span>
          <ul v-for="s in sources">
-           <li v-if="s.name">{{s.name}}</li>
+           <li v-if="s.name">{{s.name}} </li>
            <li v-if="s.display_name">{{s.display_name}}</li>
          </ul>
       </div>
@@ -40,7 +40,7 @@
            <img v-if="m.poster_120x171" v-bind:src="m.poster_120x171" alt="" class="square" style="height: 50px">
            <img v-if="m.artwork_208x117" v-bind:src="m.artwork_208x117" alt="" class="square" style="height: 50px">
 
-           <span class="title">{{m.title}}</span>
+           <span class="title">{{m.title}} ({{m.release_year}})</span>
            <a class="secondary-content" style="cursor:pointer" v-on:click="findMovie(m.id, index)"><i class="material-icons">View</i></a>
          </li>
          </ul>

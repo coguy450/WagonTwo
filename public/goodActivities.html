@@ -21,14 +21,14 @@
   </nav>
 
     <h3 class="center-align">Activities</h3>
-      <div id="goodAct" v-cloak>
+      <div id="goodAct" >
           <h4 class="greenMessage">{{message}}</h4>
         <ul v-if="!showPreviousNotes" class="collapsible" data-collapsible="expandable">
           <li v-for="a in activities">
           <div class="collapsible-header"><i class="material-icons">filter_drama</i>{{a.actName}}
 
          </div>
-          <div class="collapsible-body"><span>{{a.actType}} - {{a.actDesc}}</span>
+          <div class="collapsible-body"><span>{{a.actType}} - {{a.actDesc}} - {{a.actName}} </span>
           <a class="waves-effect waves-light btn z-depth-4" v-on:click="doActivity(a)">Do it</a>  </div>
 
           </li>

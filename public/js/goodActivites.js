@@ -10,7 +10,7 @@ var goodAct = new Vue({
   created: function() {
     this.$http.get('/goodActivities').then(response => {
       this.activities = response.data;
-    //  console.log(response.data);
+      console.log(this.activities);
     }, (err) => {
       console.log(err);
     })
