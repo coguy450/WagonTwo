@@ -9,3 +9,5 @@ app/tests/coverage/
 .bower-*/
 .idea/
 access.log
+node_modules/
+node_modules/*
